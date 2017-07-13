@@ -1,0 +1,17 @@
+<template>
+    <div style="height: 1;background-color: #5b5b5b">
+
+    </div>
+
+</template>
+
+<script>
+    module.exports = {
+        data: {},
+        methods: {}
+    }
+</script>
+
+<style>
+
+</style>

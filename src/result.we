@@ -1,0 +1,37 @@
+<template>
+    <text style="padding: 10%;background-color: darkgreen;color: white">
+        测试结果{{result}}
+    </text>
+</template>
+
+<script>
+
+    require('weex-components');
+    var modal = require('@weex-module/modal');
+    var navigator = require('@weex-module/navigator');
+
+    module.exports = {
+        data: {
+            result:"sss"
+        },
+        methods: {
+            getParameterByName: function (name, url) {
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+        },created:function () {
+                var  self=this;
+            var bundleUrl = this.$getConfig().bundleUrl;
+            var name = self.getParameterByName('name', bundleUrl);
+            this.result=name;
+        }
+    }
+</script>
+
+<style>
+
+</style>

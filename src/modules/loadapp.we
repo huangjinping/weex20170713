@@ -1,0 +1,16 @@
+<template>
+    <div>
+        <text>loadapp</text>
+    </div>
+</template>
+
+<script>
+    module.exports = {
+        data: {},
+        methods: {}
+    }
+</script>
+
+<style>
+
+</style>

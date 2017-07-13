@@ -1,0 +1,37 @@
+<template>
+    <div class="wapper">
+        <div class="top"
+             style="height: 300;background-color: cornflowerblue;justify-content: center;align-items: center">
+            <text style="color: white;font-size: 30">
+                本月销售额(元)
+            </text>
+            <text style="color:white;font-size: 50;margin: 10">
+                {{counter}}
+            </text>
+        </div>
+        <div style="flex-direction: row">
+            <div style=" height: 150;flex: 1;align-items: center;justify-content: center;background-color: red">
+                <text>待审核</text>
+                <text>{{umserter}}</text>
+            </div>
+            <div style=" height: 150;flex: 1;align-items: center;justify-content: center;background-color: green">
+                <text>待放款</text>
+                <text>{{mycounter}}</text>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    module.exports = {
+        data: {
+            counter: 0,
+            umserter:0,
+            mycounter:0
+        },
+        methods: {}
+    }
+</script>
+
+<style>
+
+</style>

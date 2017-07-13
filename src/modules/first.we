@@ -1,0 +1,18 @@
+<template>
+    <div class="wapper">
+        <text>{{title}}</text>
+    </div>
+</template>
+
+<script>
+    module.exports = {
+        data: {
+            title:"分付君商家端"
+        },
+        methods: {}
+    }
+</script>
+
+<style>
+
+</style>

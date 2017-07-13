@@ -1,0 +1,192 @@
+<template>
+
+    <div class="wapper">
+        <div style="flex-direction: column">
+            <wxc-navpage></wxc-navpage>
+        </div>
+
+        <div class="top">
+            <image src="{{cancelIcon}}" style="width: 54;height: 54"></image>
+            <div style="align-items: center;margin-bottom: 80;margin-top: 80">
+                <image src="{{icon}}" style="width: 204;height: 333"></image>
+            </div>
+        </div>
+        <div class="bottom">
+            <div style="background-color: white;height: 80%;flex-direction: row;align-items: center">
+                <image src="{{nameIcon}}" style="width: 50;height: 50;margin-left: 20%">
+                </image>
+                <input value="{{name}}" type="text" onchange="onNamechange" oninput="onNameInput" placeholder="请输入用户名"
+                       style="font: 'Arial Black';flex: 1;height: 60;margin-left: 10;margin-right: 10"/>
+            </div>
+            <div style="background-color: #5b5b5b;height: 1"></div>
+            <div style="background-color: white;height: 80%;flex-direction: row;align-items: center">
+                <image src="{{passwordIcon}}" style="width: 50;height: 50;margin-left: 20%">
+                </image>
+                <input value="{{password}}" oninput="onPasswordInput" type="number" placeholder="请输入密码"
+                       style=";font: 'Arial Black';flex: 1;height: 60;margin-left: 10;margin-right: 10"/>
+            </div>
+            <text class="button" onclick="onLogin">
+                登录
+            </text>
+
+            <!--<text class="button" onclick="onSave">保存</text>-->
+            <!--<text class="button" onclick="onGet">读取</text>-->
+            <text class="button" onclick="onnext">下一个</text>
+
+            <text class="button" onclick="onNavtive">调用原生界面</text>
+
+            <text class="button">{{txtChange}}</text>
+
+            <div style="height: 1;background-color: red"></div>
+            <!--<richtext tel="13611290917" class="button" style="color: red;height: 100;width: 200;background-color: red" >-->
+            <!--客户电话：13611290917-->
+            <!--</richtext>-->
+            <div style="height: 1;background-color: red"></div>
+        </div>
+    </div>
+</template>
+<script>
+    require('weex-components');
+    var navigator = require('@weex-module/navigator')
+    var api = require('./common/api');
+    var modal = require('@weex-module/modal');
+    var stream = require('@weex-module/stream') || {}
+    var storage = require('@weex-module/storage');
+    module.exports = {
+        data: {
+            cancelIcon: api.srcUrl.imgurl + 'ic_cancel.png',
+            icon: api.srcUrl.imgurl + "ic_log_ffj.png",
+            nameIcon: api.srcUrl.imgurl + "ic_login_phone_off.png",
+            nameIconOff: api.srcUrl.imgurl + "ic_login_phone_off.png",
+            nameIconOn: api.srcUrl.imgurl + "ic_login_phone.png",
+            passwordIcon: api.srcUrl.imgurl + "ic_login_password_off.png",
+            passwordIconOff: api.srcUrl.imgurl + "ic_login_password_off.png",
+            passwordIconOn: api.srcUrl.imgurl + "ic_login_password.png",
+            txtChange: 'ddd',
+            name: "test",
+            password: "111111",
+        },
+        methods: {
+            onNamechange: function (event) {
+            }, onNameInput: function (event) {
+                var value = event.value;
+                this.name = value;
+
+                if (value.length == 0) {
+                    this.nameIcon = this.nameIconOff;
+                } else {
+                    this.nameIcon = this.nameIconOn;
+                }
+            }, onPasswordInput: function (event) {
+                var value = event.value;
+                this.password = value;
+                if (value.length == 0) {
+                    this.passwordIcon = this.passwordIconOff;
+                } else {
+                    this.passwordIcon = this.passwordIconOn;
+                }
+            }, onLogin: function (event) {
+
+                var params = {
+                    'url': api.srcUrl.resurl + 'my.js',
+                    'animated': 'true'
+                };
+                navigator.push(params, function (e) {
+                    //callback
+                });
+
+//                var SEARCH_URL = 'https://ib.hdfex.com/hd-merchant-biz-app/app/login'
+//
+//                stream.fetch({
+//                    method: 'GET',
+//                    url: SEARCH_URL + "?account=test&&password=111111",
+//                    type: 'json'
+//                }, function (res) {
+//                    modal.toast({
+//                        message: res.data.code,
+//                        duration: 1
+//                    });
+
+//                });
+            }, onSave: function (event) {
+                storage.setItem("mySave", "sssssssssss", function (e) {
+
+                })
+            }, onGet: function (event) {
+                storage.getItem("mySave", function (e) {
+                    modal.toast({
+                        message: e.data,
+                        duration: 1
+                    });
+                });
+
+
+//                storage.getAllKeys(function(e){
+//                    modal.toast({
+//                        message: e.data,
+//                        duration: 1
+//                    });
+//                });
+            }, onNavtive: function (event) {
+//                var name = require('@weex-module/weex-event').printLog("http://www.测试点击.com");
+                require('@weex-module/weex-event').openURL("http://www.baidu.com",function(e){
+                    this.txtChange = e;
+                    modal.toast(
+                        {
+                            message: "调用基本" + e,
+                            duration: 1
+                        }
+                    );
+                });
+
+
+            }, onnext: function () {
+
+
+                modal.toast(
+                    {
+                        message: api.srcUrl.resurl ,
+                        duration: 1
+                    }
+                );
+
+                var params = {
+                    'url': api.srcUrl.resurl + 'result.js?name=1234',
+                    'animated': 'true'
+                };
+                navigator.push(params, function (e) {
+                    //callback
+                });
+            }
+        }, created: function () {
+            var bundleUrl = this.$getConfig().bundleUrl;
+            this.baseURL = api.getBaseUrl(bundleUrl, true);
+        }
+    }
+</script>
+
+<style>
+    .wapper {
+        background-color: #F0F0F0;
+        flex-direction: column;
+    }
+
+    .top {
+        padding: 10%;
+    }
+
+    .bottom {
+    }
+
+    .button {
+        color: white;
+        background-color: dodgerblue;
+        border-radius: 5;
+        font-size: 35;
+        text-align: center;
+        margin-top: 40;
+        margin-left: 40;
+        margin-right: 40;
+        padding: 20;
+    }
+</style>

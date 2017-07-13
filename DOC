@@ -1,0 +1,19 @@
+or create a new repository on the command line
+
+echo "# weex20170713" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin git@github.com:huangjinping/weex20170713.git
+git push -u origin master
+…or push an existing repository from the command line
+
+git remote add origin git@github.com:huangjinping/weex20170713.git
+git push -u origin master
+
+
+[weex](https://github.com/matisha001/weex-WeexOne/blob/master/Screenshot/Screenshot_2017-01-26-12-26-53.png)
+[weex](https://github.com/matisha001/weex-WeexOne/blob/master/Screenshot/Screenshot_2017-01-26-12-26-59.png)
+[weex](https://github.com/matisha001/weex-WeexOne/blob/master/Screenshot/Screenshot_2017-01-26-12-27-09.png)
+[weex](https://github.com/matisha001/weex-WeexOne/blob/master/Screenshot/Screenshot_2017-01-26-12-27-18.png)
+

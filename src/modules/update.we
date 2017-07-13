@@ -1,0 +1,129 @@
+<template>
+    <div style="background-color:#F5F5F9">
+        <!--滚动控件-->
+        <scroller>
+            <slider class="slider" interval="3000" auto-play="true">
+                <div class="slider-pages" repeat="item in itemList">
+                    <image class="img" src="{{item.pic}}"></image>
+                    <text class="title">{{item.title}}</text>
+                </div>
+                <indicator class="indicator"></indicator>
+            </slider>
+            <div style="flex-direction: row;">
+                <div style="flex: 1;background-color: white;height: 200;margin-right: 2;flex-direction: row;justify-content: center;align-items: center">
+                    <image src="{{scanIcon}}" style="width:100;height: 100"></image>
+                    <div style="flex-direction: column;margin-left: 10%">
+                        <text style="font-size: 35;color: black">扫码购</text>
+                        <text style="font-size: 20;color: gray;margin-top: 10">扫码下单</text>
+                    </div>
+                </div>
+                <div style="flex: 1;background-color: white;height: 200;margin-right: 2;flex-direction: row;justify-content: center;align-items: center">
+                    <image src="{{scanIcon}}" style="width:100;height: 100"></image>
+                    <div style="flex-direction: column;margin-left: 10%">
+                        <text style="font-size: 35;color: black">现金贷</text>
+                        <text style="font-size: 20;color: gray;margin-top: 10">最高可以贷20万</text>
+                    </div>
+                </div>
+            </div>
+            <!--没有登录信息-->
+            <div class="unlogin">
+                <image src="{{scanIcon}}" class="img"></image>
+                <div style="align-items: center">
+                    <image src="{{scanIcon}}" style="width: 100;height: 100;margin-top: 100"></image>
+                    <text style=" text-align: center;margin-top:50;width: 300;align-items: center;color: gray">
+                        在这里，将会展示出订单的最新进度以及账单信息
+                    </text>
+                </div>
+            </div>
+            <!--登录信息-->
+            <div class="login" if="{{login}}">
+                <div style="margin-top: 10;height: 230;background-color: white">
+                    <div style="flex-direction: row;align-items: center;padding: 10">
+                        <image src="{{scanIcon}}" style="width: 60;height: 60"></image>
+                        <text style="font-size: 30;color: black;">系统公告</text>
+                    </div>
+                    <text style="padding: 10">{{noticeTitle}}</text>
+                    <div style="height: 1;background-color: gray;margin-top:20"></div>
+                    <div style="align-items: center;justify-content: center;height: 80">
+                        <text style="color: #33b5e5">查看详情</text>
+                    </div>
+                </div>
+            </div>
+        </scroller>
+    </div>
+</template>
+
+<script>
+    var stream = require('@weex-module/stream') || {}
+    var modal = require('@weex-module/modal');
+
+    module.exports = {
+        data: {
+            login: false,
+            noticeTitle: "哈哈学习",
+            scanIcon: 'https://gd2.alicdn.com/bao/uploaded/i2/T14H1LFwBcXXXXXXXX_!!0-item_pic.jpg',
+            itemList: []
+        },
+        methods: {}, created: function () {
+            var self = this;
+            self.imageList = [];
+            var SEARCH_URL = 'https://ic.hdfex.com/hd-merchant-web/mobile/home'
+            stream.fetch({
+                method: 'GET',
+                url: SEARCH_URL + "?id=6263199076667010049&&token=qe9x75e94x80",
+                type: 'json'
+            }, function (res) {
+                if (0 == res.data.code) {
+                    self.itemList = res.data.result.banner;
+                } else {
+                    modal.toast({
+                        message: res.data.message,
+                        duration: 1
+                    });
+                }
+            });
+        }
+    }
+</script>
+
+<style>
+
+    .img {
+        width: 750;
+        height: 230;
+    }
+
+    .title {
+        position: absolute;
+        top: 20;
+        left: 20;
+        color: #ff0000;
+        font-size: 48;
+        font-weight: bold;
+        background-color: #eeeeee;
+    }
+
+    .slider {
+        flex-direction: row;
+        width: auto;
+        height: 230;
+    }
+
+    .slider-pages {
+        flex-direction: row;
+        width: 714;
+        height: 200;
+    }
+
+    .indicator {
+        width: 714;
+        height: 40;
+        position: absolute;
+        top: 180;
+        margin-left: 20;
+        item-color: gray;
+        item-selectedColor: white;
+        item-size: 20;
+    }
+
+</style>
